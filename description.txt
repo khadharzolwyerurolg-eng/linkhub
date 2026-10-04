@@ -1,0 +1,62 @@
+Recursos de Links
+
+Versioning
+https://api.linkhub.com/v1/
+
+GET https://api.linkhub.com/v1/auth/users/123?include=posts
+│   │                      │  │        │  │
+│   │                      │  │        │  └─ Query parameter
+│   │                      │  │        └──── Path parameter (user ID)
+│   │                      │  └─────────── Endpoint path
+│   │                      └────────────── Version
+│   └───────────────────────────────────── Base URL
+└───────────────────────────────────────── HTTP method
+
+
+ENDPOINTS PRINCIPAIS
+
+LINKS::
+GET:: /api/links/posts ->  Lista todos os links públicos cadastrados no sistema.
+GET:: /api/links/posts/{id} -> Busca os detalhes de um link específico através do seu ID identificador.
+POST:: /api/links/posts -> Cria um novo link no banco de dados (Requer o envio do Payload/Body).
+PUT:: /api/links/posts/{id} ->  Atualiza por completo as informações de um link existente.
+DELETE:: /api/links/posts/{id} -> Remove um link permanentemente da base de dados.
+
+CATEGORIAS::
+GET:: /api/links/categories/posts ->  Lista categorias cadastrados no sistema.
+GET:: /api/links/categories/posts/{id} -> Busca as categorias específicas através do seu ID identificador.
+POST:: /api/categories/links/posts -> Cria uma categoria de no banco de dados (Requer o envio do Payload/Body).
+PUT:: /api/categories/links/posts/{id} ->  Atualiza por completo as informações de uma categoria de um link existente.
+DELETE:: /api/categories/links/posts/{id} -> Remove uma categoria de um link permanentemente da base de dados.
+
+
+USERS::
+POST:: /api/auth/register -> Registo de uma nova conta de utilizador.
+POST:: /api/auth/login -> Autenticação para gerar o token de segurança da API.
+GET:: /api/auth/user -> Busca um usuário no banco de dados (Requer o envio do Payload/Body).
+PUT:: /api/auth/user -> Atualiza um usuário por completo as informações de um usuário existente.
+DELETE:: /api/auth/user -> Remove um usuário do sistema permanentemente da base de dados.
+
+ADIMINISTRATOR API
+POST:: /api/admin/register/user -> Registo de um privilégio aos utilizadores.
+POST:: /api/admin/ban/user/{id} ➔ -> Bane um utilizador do sistema.
+POST:: /api/admin/unable/categoria -> Desabilita uma categoria.
+GET::  /api/admin/metrics/overview -> Retorna o total de utilizadores ativos, links cadastrados e categorias totais.
+GET::  /api/admin/audit/logs -> Retorna o histórico de quem criou, editou ou apagou recursos no sistema.
+GET::  /api/admin/audit/actions/{userId} -> Filtra todas as ações realizadas por um utilizador específico (útil para investigar abusos).
+
+Exemplo de Payload (Body):
+{
+  "userId": "6abac75c68ce3f6f09073749",
+  "role": "admin"
+}
+
+BULK MODERATION
+
+Ações administrativas aplicadas a múltiplos recursos de uma só vez para otimizar o tempo do administrador.
+POST:: /api/admin/links/bulk-delete -> Apaga vários links de uma vez (enviando uma lista de IDs).
+
+
+SYSTEM SETTINGS
+PUT:: /api/admin/settings/maintenance -> Ativa ou desativa o "Modo de Manutenção" da API (bloqueando temporariamente novas criações de links).
+PUT:: /api/admin/settings/limits -> Altera o limite máximo de links que cada utilizador comum pode registar.
